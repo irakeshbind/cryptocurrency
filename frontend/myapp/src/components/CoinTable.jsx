@@ -68,5 +68,29 @@ export default function CoinTable() {
     }
   };
 
+  return (
+    <div>
+      <div style={{ marginBottom: 12, display: 'flex', gap: 12, alignItems: 'center' }}>
+        <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search name or symbol..." style={{ padding: 8, minWidth: 240 }} />
+        <button onClick={fetchCoins} style={{ padding: '8px 12px' }}>Refresh now</button>
+        <div style={{ marginLeft: 'auto', color: '#555' }}>
+          {loading ? 'Loading...' : lastSync ? `Last sync: ${lastSync.toLocaleString()}` : 'Not synced yet'}
+        </div>
+      </div>
+
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <thead>
+          <tr style={{ textAlign: 'left', borderBottom: '1px solid #eee' }}>
+            <th style={{ cursor: 'pointer' }} onClick={() => toggleSort('name')}>Coin</th>
+            <th style={{ cursor: 'pointer' }} onClick={() => toggleSort('symbol')}>Symbol</th>
+            <th style={{ cursor: 'pointer' }} onClick={() => toggleSort('price')}>Price (USD)</th>
+            <th style={{ cursor: 'pointer' }} onClick={() => toggleSort('marketCap')}>Market Cap</th>
+            <th style={{ cursor: 'pointer' }} onClick={() => toggleSort('change24h')}>24h %</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+       
+      </table>
+    </div>
   );
 }
