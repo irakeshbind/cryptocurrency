@@ -59,5 +59,14 @@ export default function CoinTable() {
     return out;
   }, [coins, q, sortKey, sortDir]);
 
+  const toggleSort = (key) => {
+    if (sortKey === key) {
+      setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortKey(key);
+      setSortDir('desc');
+    }
+  };
+
   );
 }
