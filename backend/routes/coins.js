@@ -86,4 +86,3 @@ router.get("/history/:coinId", async (req, res) => {
 });
 
 module.exports = router;
-
