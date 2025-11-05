@@ -16,5 +16,21 @@ export default function CoinTable() {
   const [sortDir, setSortDir] = useState('desc');
   const [lastSync, setLastSync] = useState(null);
 
+  const fetchCoins = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/coins`);
+      const body = await res.json();
+      if (body && body.coins) {
+        setCoins(body.coins);
+        setLastSync(new Date());
+      }
+    } catch (err) {
+      console.error('fetchCoins', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   );
 }
