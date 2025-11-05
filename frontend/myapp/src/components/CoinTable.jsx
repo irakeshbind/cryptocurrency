@@ -32,5 +32,13 @@ export default function CoinTable() {
     }
   };
 
+  useEffect(() => {
+    fetchCoins();
+
+    // Auto-refresh every 30 minutes (30 * 60 * 1000 ms)
+    const interval = setInterval(fetchCoins, 30 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   );
 }
