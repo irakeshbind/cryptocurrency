@@ -40,5 +40,24 @@ export default function CoinTable() {
     return () => clearInterval(interval);
   }, []);
 
+  const filtered = useMemo(() => {
+    const qLower = q.trim().toLowerCase();
+    let out = coins.filter(c => !qLower || c.name.toLowerCase().includes(qLower) || c.symbol.toLowerCase().includes(qLower));
+    out.sort((a, b) => {
+      let av = a[sortKey] ?? 0;
+      let bv = b[sortKey] ?? 0;
+      if (sortKey === 'name' || sortKey === 'symbol') {
+        av = String(av).toLowerCase();
+        bv = String(bv).toLowerCase();
+        if (av < bv) return sortDir === 'asc' ? -1 : 1;
+        if (av > bv) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+      } else {
+        return sortDir === 'asc' ? av - bv : bv - av;
+      }
+    });
+    return out;
+  }, [coins, q, sortKey, sortDir]);
+
   );
 }
