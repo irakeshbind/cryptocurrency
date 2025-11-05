@@ -8,5 +8,13 @@ function formatNumber(n) {
   return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
 }
 
+export default function CoinTable() {
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [q, setQ] = useState('');
+  const [sortKey, setSortKey] = useState('marketCap');
+  const [sortDir, setSortDir] = useState('desc');
+  const [lastSync, setLastSync] = useState(null);
+
   );
 }
