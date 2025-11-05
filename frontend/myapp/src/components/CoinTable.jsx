@@ -89,7 +89,20 @@ export default function CoinTable() {
             <th>Last Updated</th>
           </tr>
         </thead>
-       
+        <tbody>
+          {filtered.map(c => (
+            <tr key={c.coinId} style={{ borderBottom: '1px solid #f6f6f6' }}>
+              <td style={{ padding: '8px 0' }}>{c.name}</td>
+              <td>{c.symbol.toUpperCase()}</td>
+              <td>${formatNumber(c.price)}</td>
+              <td>${formatNumber(c.marketCap)}</td>
+              <td style={{ color: (c.change24h > 0 ? 'green' : (c.change24h < 0 ? 'red' : '#333')) }}>
+                {c.change24h == null ? '-' : `${c.change24h.toFixed(2)}%`}
+              </td>
+              <td>{c.lastUpdated ? new Date(c.lastUpdated).toLocaleString() : '-'}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
