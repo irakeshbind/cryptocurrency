@@ -42,6 +42,32 @@ router.get("/coins", async (req, res) => {
   }
 });
 
+// POST /api/history  -> store snapshot for all coins (called by cron or manual)
+// Optionally accepts ?coins=coin1,coin2 to store only those.
+router.post("/history", async (req, res) => {
+  try {
+    // fetch the latest from CoinGecko
+    const { data } = await axios.get(COINGECKO_API);
+    const mapped = data.map(mapCoin);
+
+    const docs = mapped.map((c) => ({
+      coinId: c.coinId,
+      name: c.name,
+      symbol: c.symbol,
+      price: c.price,
+      marketCap: c.marketCap,
+      change24h: c.change24h,
+      timestamp: new Date(),
+    }));
+
+    await HistoryData.insertMany(docs);
+
+    res.json({ success: true, inserted: docs.length });
+  } catch (err) {
+    console.error("POST /api/history error", err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 
 module.exports = router;
 
