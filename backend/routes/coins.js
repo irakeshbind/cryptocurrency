@@ -69,5 +69,21 @@ router.post("/history", async (req, res) => {
   }
 });
 
+// GET /api/history/:coinId
+router.get("/history/:coinId", async (req, res) => {
+  try {
+    const { coinId } = req.params;
+    const limit = parseInt(req.query.limit || "500");
+    const data = await HistoryData.find({ coinId })
+      .sort({ timestamp: 1 })
+      .limit(limit)
+      .lean();
+    res.json({ success: true, history: data });
+  } catch (err) {
+    console.error("GET /api/history/:coinId error", err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;
 
